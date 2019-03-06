@@ -20,35 +20,45 @@ interface Coordinate {
 }
 
 
-const direction = Direction.down;
 
-const coordinate = [0,0];
 
-function SumCoordinates(c1: Coordinate, c2: Coordinate): Coordinate {
+
+
+function SumCoordinates(c1: Coordinate, c2: Coordinate, nC: number, nR: number): Coordinate {
+    let col = c1.col + c2.col;
+    let row = c1.row + c2.row;
+    if (col===-1) {
+        col+=nC;
+        row-=1;
+    } else if (col === nC) {
+        col-=nC;
+        row+=1;
+    }
+    if (row === -1 || row === nR) {
+        return c1;
+    }
     return {
-        col: c1.col + c2.col,
-        row: c1.row + c2.row
+        col: col,
+        row: row
     }
 }
 
-function NextCoordinatePartOne(coordinate: Coordinate, direction: Direction) {
+function NextCoordinate(coordinate: Coordinate, direction: Direction, nC: number, nR: number) {
     switch(direction) {
         case Direction.up:
-            return SumCoordinates(coordinate, directionalCoordinates.up);
+            return SumCoordinates(coordinate, directionalCoordinates.up, nC, nR);
         case Direction.right:
-            return SumCoordinates(coordinate, directionalCoordinates.right);
+            return SumCoordinates(coordinate, directionalCoordinates.right, nC, nR);
         case Direction.down:
-            return SumCoordinates(coordinate, directionalCoordinates.down);
+            return SumCoordinates(coordinate, directionalCoordinates.down, nC, nR);
         case Direction.left:
-            return SumCoordinates(coordinate, directionalCoordinates.left);
+            return SumCoordinates(coordinate, directionalCoordinates.left, nC, nR);
     }
 }
 
-function NextCoordinatePartTwo(coordinate: Coordinate, nR: number, nC: number) {
-    const newCoordinate = {...coordinate};
-    if (coordinate.col < 1)
-}
+const nR = 5;
+const nC = 2;
+const coordinate = {col: 0, row: 4};
+console.log(NextCoordinate(coordinate, Direction.left, nC, nR));
 
-function NextCoordinate(coordinate: number[], direction: Direction, nR: number, nC: number) {
-    return NextCoordinatePartTwo(NextCoordinatePartOne(coordinate, direction), nR, nC);
-}
+
